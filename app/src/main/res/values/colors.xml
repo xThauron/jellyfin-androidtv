@@ -8,6 +8,8 @@
     <color name="grey">#303030</color>
     <color name="grey_light">#4b4b4b</color>
     <color name="not_quite_black">#101010</color>
+    <!-- TEST: temporary, to verify the fork updater end to end. Revert before real use. -->
+    <color name="test_pink">#FF4FA3</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#CC3333</color>
@@ -64,5 +66,6 @@
     <!-- Card Background Color -->
     <color name="lb_basic_card_info_bg_color">@color/grey</color>
 
-    <color name="background_filter">#94101010</color>
+    <!-- TEST: pink wash instead of the dark one, revert together with test_pink -->
+    <color name="background_filter">#94FF4FA3</color>
 </resources>
