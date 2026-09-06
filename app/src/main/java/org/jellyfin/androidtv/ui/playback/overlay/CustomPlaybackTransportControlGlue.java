@@ -42,6 +42,7 @@ import org.jellyfin.androidtv.ui.playback.overlay.action.SelectAudioAction;
 import org.jellyfin.androidtv.ui.playback.overlay.action.SelectQualityAction;
 import org.jellyfin.androidtv.ui.playback.overlay.action.SkipNextAction;
 import org.jellyfin.androidtv.ui.playback.overlay.action.SkipPreviousAction;
+import org.jellyfin.androidtv.ui.playback.overlay.action.WhoIsPlayingAction;
 import org.jellyfin.androidtv.ui.playback.overlay.action.ZoomAction;
 import org.jellyfin.androidtv.util.DateTimeExtensionsKt;
 import org.koin.java.KoinJavaComponent;
@@ -250,6 +251,8 @@ public class CustomPlaybackTransportControlGlue extends PlaybackTransportControl
         if (playerAdapter.hasMultiAudio()) {
             primaryActionsAdapter.add(selectAudioAction);
         }
+
+        primaryActionsAdapter.add(new WhoIsPlayingAction(getContext(), this));
 
         if (playerAdapter.isLiveTv()) {
             primaryActionsAdapter.add(channelBarChannelAction);

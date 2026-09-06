@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!--
+		Fork-only strings, deliberately kept out of the app module so Weblate and
+		upstream string changes never conflict with them.
+	-->
+	<string name="whoson_action_label">Kto to gra</string>
+	<string name="whoson_checking">Sprawdzam, kto gra…</string>
+	<string name="whoson_failed">Nie udało się uruchomić rozpoznawania</string>
+</resources>
