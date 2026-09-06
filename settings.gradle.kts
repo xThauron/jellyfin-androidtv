@@ -5,6 +5,9 @@ rootProject.name = "jellyfin-androidtv"
 // Application
 include(":app")
 
+// Fork: standalone self-updater, see updater/README.md
+include(":updater")
+
 // Modules
 include(":design")
 include(":playback:core")

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Jellyfin Updater</string>
+
+	<string name="installed_missing">Jellyfin is not installed</string>
+	<string name="installed_version">Installed: %1$s (%2$d)</string>
+
+	<string name="status_checking">Checking for updates…</string>
+	<string name="status_no_release">No release with an APK found in the fork repository</string>
+	<string name="status_up_to_date">You are on the latest build</string>
+	<string name="status_update_available">Available: %1$s (%2$d)</string>
+	<string name="status_older_release">The latest release is older than what is installed, the system will most likely reject it</string>
+	<string name="status_downloading">Downloading…</string>
+	<string name="status_installing">Handing the APK to the system installer…</string>
+	<string name="status_install_success">Installed. You can go back to Jellyfin.</string>
+	<string name="status_install_cancelled">Installation was cancelled</string>
+	<string name="status_error">%1$s</string>
+
+	<string name="progress_bytes">%1$.1f / %2$.1f MB</string>
+
+	<string name="action_install">Install %1$s</string>
+	<string name="action_update">Update to %1$s</string>
+	<string name="action_reinstall">Reinstall %1$s</string>
+	<string name="action_unavailable">Nothing to install</string>
+	<string name="action_refresh">Check again</string>
+
+	<string name="hint_unknown_sources">If nothing happens, allow this app to install unknown apps in the system settings.</string>
+</resources>

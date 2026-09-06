@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="@color/background"
+	android:gravity="center"
+	android:orientation="vertical"
+	android:padding="48dp">
+
+	<ImageView
+		android:layout_width="64dp"
+		android:layout_height="64dp"
+		android:contentDescription="@string/app_name"
+		android:src="@drawable/ic_updater" />
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:text="@string/app_name"
+		android:textColor="@color/text_primary"
+		android:textSize="28sp"
+		android:textStyle="bold" />
+
+	<TextView
+		android:id="@+id/installed"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:textColor="@color/text_secondary"
+		android:textSize="16sp" />
+
+	<TextView
+		android:id="@+id/status"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="24dp"
+		android:gravity="center"
+		android:text="@string/status_checking"
+		android:textColor="@color/text_primary"
+		android:textSize="18sp" />
+
+	<ProgressBar
+		android:id="@+id/progress"
+		style="?android:attr/progressBarStyleHorizontal"
+		android:layout_width="480dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:max="100"
+		android:visibility="gone" />
+
+	<TextView
+		android:id="@+id/progressText"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="4dp"
+		android:textColor="@color/text_secondary"
+		android:textSize="14sp" />
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="32dp"
+		android:orientation="horizontal">
+
+		<Button
+			android:id="@+id/action"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginEnd="16dp"
+			android:minWidth="220dp"
+			android:text="@string/action_unavailable" />
+
+		<Button
+			android:id="@+id/refresh"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:minWidth="180dp"
+			android:text="@string/action_refresh" />
+	</LinearLayout>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="24dp"
+		android:gravity="center"
+		android:text="@string/hint_unknown_sources"
+		android:textColor="@color/text_secondary"
+		android:textSize="13sp" />
+
+</LinearLayout>

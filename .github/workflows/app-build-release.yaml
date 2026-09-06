@@ -5,17 +5,44 @@ on:
     branches:
       - master
   workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish a GitHub release with the built APKs
+        type: boolean
+        default: true
 
+# Required to create releases and push tags
 permissions:
-  contents: read
+  contents: write
+
+# Never build two releases at once, they would claim the same version
+concurrency:
+  group: fork-release
+  cancel-in-progress: false
 
 jobs:
   build-release:
-    name: Build signed release APK
+    name: Build signed release APKs
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+
+      - name: Resolve version
+        run: |
+          base="$(tr -d '[:space:]' < fork-version.txt)"
+          build="${{ github.run_number }}"
+
+          # getVersionCode() packs the pre-release number into 2 digits, so a build
+          # number above 98 would silently collide with the next base version.
+          # Bump fork-version.txt to reset the usable range.
+          if [ "$build" -gt 98 ]; then
+            echo "::error::Build number $build exceeds the 98 builds available for base version $base. Bump fork-version.txt."
+            exit 1
+          fi
+
+          echo "FORK_BASE_VERSION=${base}" >> "$GITHUB_ENV"
+          echo "JELLYFIN_VERSION=${base}-fork.${build}" >> "$GITHUB_ENV"
 
       - name: Setup Java
         uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654 # v5.2.0
@@ -29,18 +56,21 @@ jobs:
       - name: Decode keystore
         run: echo "${{ secrets.KEYSTORE }}" | base64 --decode > keystore.jks
 
-      - name: Assemble release APK
+      - name: Assemble release APKs
         env:
           KEYSTORE_FILE: ${{ github.workspace }}/keystore.jks
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew assembleRelease
+        run: ./gradlew :app:assembleRelease :updater:assembleRelease :app:versionTxt
 
-      - name: Collect APK
+      - name: Collect APKs
         run: |
           mkdir -p build/gh-app-publish/
-          find app/build/outputs/apk/release/ -iname "*.apk" -exec mv "{}" build/gh-app-publish/ \;
+          find app/build/outputs/apk/release/ updater/build/outputs/apk/release/ \
+            -iname "*.apk" -exec mv "{}" build/gh-app-publish/ \;
+          mv app/build/version.txt build/gh-app-publish/
+          ls -l build/gh-app-publish/
 
       - name: Remove keystore
         if: always()
@@ -53,3 +83,23 @@ jobs:
           retention-days: 14
           if-no-files-found: error
           path: build/gh-app-publish/
+
+      - name: Publish GitHub release
+        if: ${{ github.event_name == 'push' || inputs.publish }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMIT_SHA: ${{ github.sha }}
+        run: |
+          notes="Fork build of jellyfin-androidtv, based on upstream v${FORK_BASE_VERSION}.
+
+          Built from ${COMMIT_SHA}.
+
+          Signed with the fork keystore, so it cannot be installed on top of an
+          official Jellyfin build - uninstall the official app first."
+
+          gh release create "v${JELLYFIN_VERSION}" build/gh-app-publish/* \
+            --target "${COMMIT_SHA}" \
+            --title "v${JELLYFIN_VERSION}" \
+            --notes "$notes" \
+            --generate-notes \
+            --latest
