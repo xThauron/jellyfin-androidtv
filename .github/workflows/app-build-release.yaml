@@ -70,6 +70,17 @@ jobs:
           find app/build/outputs/apk/release/ updater/build/outputs/apk/release/ \
             -iname "*.apk" -exec mv "{}" build/gh-app-publish/ \;
           mv app/build/version.txt build/gh-app-publish/
+
+          # Release builds are minified, so crash reports come back obfuscated.
+          # Ship the mapping so a stack trace can be read after the fact with
+          # retrace, otherwise a crash on the box is undebuggable.
+          mapping=app/build/outputs/mapping/release/mapping.txt
+          if [ -f "$mapping" ]; then
+            cp "$mapping" "build/gh-app-publish/mapping-v${JELLYFIN_VERSION}.txt"
+          else
+            echo "::warning::No R8 mapping found at $mapping"
+          fi
+
           ls -l build/gh-app-publish/
 
       - name: Remove keystore

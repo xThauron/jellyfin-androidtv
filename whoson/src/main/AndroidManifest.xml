@@ -5,14 +5,14 @@
 		Merged into the app manifest at build time, so enabling this feature never
 		touches app/src/main/AndroidManifest.xml.
 
-		No theme is set on purpose: the activity inherits the application theme, the
-		same way ExternalPlayerActivity does.
+		The translucent theme is load bearing, see res/values/themes.xml.
 	-->
 	<application>
 		<activity
 			android:name="org.jellyfin.androidtv.whoson.CastWebViewActivity"
 			android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
-			android:exported="false" />
+			android:exported="false"
+			android:theme="@style/Theme.Whoson.Overlay" />
 	</application>
 
 </manifest>

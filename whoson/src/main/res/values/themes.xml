@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!--
+		Translucent on purpose. A fullscreen opaque activity pushes the activity below
+		into onStop/onSaveInstanceState, which tears the player fragment down; a late
+		fragment transaction then lands after the state was saved and Jellyfin crashes
+		with "Fragment already added and state has been saved".
+
+		With a translucent window the host only pauses, so its fragment state stays
+		valid. The WebView paints an opaque background, so this still looks fullscreen.
+	-->
+	<style name="Theme.Whoson.Overlay" parent="@android:style/Theme.Translucent.NoTitleBar">
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowBackground">@android:color/transparent</item>
+		<item name="android:windowAnimationStyle">@null</item>
+	</style>
+</resources>
