@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!--
+		Fork-only strings, deliberately kept out of the app module so Weblate and
+		upstream string changes never conflict with them.
+	-->
+	<string name="ngfx_toolbar_requests">Requesty</string>
+	<string name="ngfx_requests_title">Moje requesty</string>
+	<string name="ngfx_requests_empty">Nie masz jeszcze żadnych requestów</string>
+	<string name="ngfx_requests_loading">Wczytywanie…</string>
+	<string name="ngfx_search_row">Do zarequestowania</string>
+
+	<!-- Request statuses. AWAITING_JELLYFIN deliberately does NOT say "available":
+	     the file is in place but Jellyfin has not scanned it yet, so it will not play. -->
+	<string name="ngfx_status_pending">Oczekuje na zatwierdzenie</string>
+	<string name="ngfx_status_approved">Zatwierdzony</string>
+	<string name="ngfx_status_rejected">Odrzucony</string>
+	<string name="ngfx_status_downloading">Pobieranie</string>
+	<string name="ngfx_status_importing">Importowanie</string>
+	<string name="ngfx_status_awaiting_jellyfin">Czeka na skan biblioteki</string>
+	<string name="ngfx_status_partially_available">Częściowo dostępny</string>
+	<string name="ngfx_status_available">Dostępny</string>
+	<string name="ngfx_status_unknown">Nieznany status</string>
+
+	<!-- Requesting -->
+	<string name="ngfx_request_confirm_title">Zarequestować?</string>
+	<string name="ngfx_request_confirm_message">%1$s</string>
+	<string name="ngfx_request_sent">Wysłano request: %1$s</string>
+	<string name="ngfx_request_failed">Nie udało się wysłać requesta</string>
+
+	<!-- Row actions -->
+	<string name="ngfx_action_cancel">Wycofaj</string>
+	<string name="ngfx_action_open">Otwórz</string>
+	<string name="ngfx_cancel_confirm_title">Wycofać request?</string>
+	<string name="ngfx_cancel_confirm_message">%1$s</string>
+	<string name="ngfx_cancel_done">Request wycofany</string>
+	<string name="ngfx_rejection_reason">Powód: %1$s</string>
+
+	<!-- Errors -->
+	<string name="ngfx_error_not_configured">Brak adresu serwera lub tokenu</string>
+	<string name="ngfx_error_unauthorized">Sesja wygasła, zaloguj się ponownie</string>
+	<string name="ngfx_error_rejected_by_ngfx">NGFX odrzucił token — sprawdź konfigurację wtyczki</string>
+	<string name="ngfx_error_forbidden">Brak uprawnień do tej operacji</string>
+	<string name="ngfx_error_conflict">Tego requesta nie da się już wycofać</string>
+	<string name="ngfx_error_unavailable">NGFX jest nieosiągalny</string>
+	<string name="ngfx_error_network">Błąd połączenia</string>
+	<string name="ngfx_error_malformed">Nieoczekiwana odpowiedź serwera</string>
+
+	<!-- Shown instead of a number when a download is not moving (stalled, paused,
+	     seeding). Never render those as "0 B/s" or "0:00". -->
+	<string name="ngfx_not_moving">—</string>
+</resources>

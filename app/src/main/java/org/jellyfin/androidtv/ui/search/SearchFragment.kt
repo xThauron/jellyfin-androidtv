@@ -65,7 +65,7 @@ class SearchFragment : Fragment() {
 			}
 
 			viewModel.searchResultsFlow.collect { results ->
-				searchFragmentDelegate.showResults(results)
+				searchFragmentDelegate.showResults(results, query.text)
 			}
 		}
 

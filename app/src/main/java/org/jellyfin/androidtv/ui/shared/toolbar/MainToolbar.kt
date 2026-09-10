@@ -1,5 +1,6 @@
 package org.jellyfin.androidtv.ui.shared.toolbar
 
+import android.content.Intent
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.focusGroup
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +23,7 @@ import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.flow.filterNotNull
 import org.jellyfin.androidtv.R
+import org.jellyfin.androidtv.ngfx.R as NgfxR
 import org.jellyfin.androidtv.auth.repository.SessionRepository
 import org.jellyfin.androidtv.auth.repository.UserRepository
 import org.jellyfin.androidtv.ui.NowPlayingComposable
@@ -38,6 +40,7 @@ import org.jellyfin.androidtv.ui.navigation.ActivityDestinations
 import org.jellyfin.androidtv.ui.navigation.Destinations
 import org.jellyfin.androidtv.ui.navigation.NavigationRepository
 import org.jellyfin.androidtv.ui.playback.MediaManager
+import org.jellyfin.androidtv.ui.requests.RequestsActivity
 import org.jellyfin.androidtv.ui.settings.compat.SettingsViewModel
 import org.jellyfin.androidtv.util.apiclient.getUrl
 import org.jellyfin.androidtv.util.apiclient.primaryImage
@@ -150,6 +153,15 @@ private fun MainToolbar(
 						},
 						colors = if (activeButton == MainToolbarActiveButton.Search) activeButtonColors else ButtonDefaults.colors(),
 						content = { Text(stringResource(R.string.lbl_search)) }
+					)
+					// Fork: NGFX requests. A plain activity, so this needs no entry in
+					// Destinations or the app manifest.
+					Button(
+						onClick = {
+							activity?.startActivity(Intent(activity, RequestsActivity::class.java))
+						},
+						colors = ButtonDefaults.colors(),
+						content = { Text(stringResource(NgfxR.string.ngfx_toolbar_requests)) }
 					)
 				}
 			}

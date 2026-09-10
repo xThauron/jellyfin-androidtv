@@ -15,6 +15,7 @@ include(":playback:jellyfin")
 include(":playback:media3:exoplayer")
 include(":playback:media3:session")
 include(":preference")
+include(":ngfx")
 include(":whoson")
 
 pluginManagement {

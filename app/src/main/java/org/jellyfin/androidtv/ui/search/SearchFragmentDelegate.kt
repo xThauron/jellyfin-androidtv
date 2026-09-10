@@ -22,7 +22,10 @@ class SearchFragmentDelegate(
 ) {
 	val rowsAdapter = MutableObjectAdapter<Row>(CustomListRowPresenter())
 
-	fun showResults(searchResultGroups: Collection<SearchResultGroup>) {
+	// Fork: offers NGFX titles to request when Jellyfin itself found nothing
+	private val ngfxSearchRow = NgfxSearchRow(context, rowsAdapter)
+
+	fun showResults(searchResultGroups: Collection<SearchResultGroup>, query: String = "") {
 		rowsAdapter.clear()
 		val adapters = mutableListOf<ItemRowAdapter>()
 		for ((labelRes, baseItems) in searchResultGroups) {
@@ -38,9 +41,12 @@ class SearchFragmentDelegate(
 			adapters.add(adapter)
 		}
 		for (adapter in adapters) adapter.Retrieve()
+
+		ngfxSearchRow.showIfNothingFound(searchResultGroups, query)
 	}
 
 	val onItemViewClickedListener = OnItemViewClickedListener { _, item, _, row ->
+		if (ngfxSearchRow.handleClick(item)) return@OnItemViewClickedListener
 		if (item !is BaseRowItem) return@OnItemViewClickedListener
 		row as ListRow
 		val adapter = row.adapter as ItemRowAdapter
@@ -48,7 +54,7 @@ class SearchFragmentDelegate(
 	}
 
 	val onItemViewSelectedListener = OnItemViewSelectedListener { _, item, _, _ ->
-		val baseItem = item?.let { (item as BaseRowItem).baseItem }
+		val baseItem = (item as? BaseRowItem)?.baseItem
 		if (baseItem != null) {
 			backgroundService.setBackground(baseItem)
 		} else {

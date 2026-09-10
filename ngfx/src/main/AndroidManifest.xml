@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<!--
+		Merged into the app manifest at build time, so enabling this feature never
+		touches app/src/main/AndroidManifest.xml.
+
+		The activity class itself lives in the app module, because its UI reuses the
+		app's own Compose design system, which a library module cannot depend on.
+		Manifest merging only needs the class to exist in the final apk, not in this
+		module, so declaring it here is what keeps the app manifest untouched.
+	-->
+	<application>
+		<activity
+			android:name="org.jellyfin.androidtv.ui.requests.RequestsActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden|screenLayout"
+			android:exported="false" />
+	</application>
+
+</manifest>
