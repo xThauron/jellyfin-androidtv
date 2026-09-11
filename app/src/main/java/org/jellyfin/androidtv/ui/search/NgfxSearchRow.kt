@@ -205,8 +205,7 @@ private class NgfxCardPresenter : Presenter() {
 		}
 	}
 
-	private companion object {
-		const val CARD_WIDTH = 116
-		const val POSTER_ASPECT = 2f / 3f
-	}
 }
+
+private const val CARD_WIDTH = 116
+private const val POSTER_ASPECT = 2f / 3f

@@ -1,6 +1,9 @@
 package org.jellyfin.androidtv.ngfx
 
-import androidx.annotation.StringRes
+// The resource id properties below are deliberately plain Int rather than @StringRes:
+// this module depends only on coroutines and timber, and androidx.annotation is not on
+// its classpath. Other modules get it for free by enabling viewBinding, which this one
+// has no use for. Adding the annotation back means adding a dependency for it.
 
 /** Server address and Jellyfin access token, supplied by the app module. */
 data class NgfxCredentials(
@@ -25,7 +28,7 @@ enum class NgfxMediaType(val wireName: String) {
  *   reported it in a library scan yet, so the title will not play.
  * - A request stays [DOWNLOADING] until every parallel download is imported.
  */
-enum class NgfxStatus(val wireName: String?, @StringRes val labelRes: Int) {
+enum class NgfxStatus(val wireName: String?, val labelRes: Int) {
 	PENDING("PENDING", R.string.ngfx_status_pending),
 	APPROVED("APPROVED", R.string.ngfx_status_approved),
 	REJECTED("REJECTED", R.string.ngfx_status_rejected),
@@ -90,7 +93,7 @@ data class NgfxRequest(
 	val jellyfinItemId: String?,
 )
 
-enum class NgfxError(@StringRes val messageRes: Int) {
+enum class NgfxError(val messageRes: Int) {
 	NOT_CONFIGURED(R.string.ngfx_error_not_configured),
 	UNAUTHORIZED(R.string.ngfx_error_unauthorized),
 	REJECTED_BY_NGFX(R.string.ngfx_error_rejected_by_ngfx),
